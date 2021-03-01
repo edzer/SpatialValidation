@@ -21,8 +21,9 @@ require(reshape2)
 ############  Initialize script
 ############
 
-root_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
-setwd(root_dir)
+#root_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
+#setwd(root_dir)
+root_dir = "."
 
 # make a raster stack 
 files <- list.files(path = paste0(root_dir, '/data/'), recursive = FALSE, pattern = "\\.tif$")
@@ -41,7 +42,7 @@ s_df <- as.data.frame(s, xy=T, na.rm=T)
 # sample size
 SampSize <- 500
 
-source('./Functions_spat_CV.R')
+source('./Functions_Spat_CV.R')
 
 ############
 ############  Generate semivariogram on AGB to define val.dist
@@ -197,7 +198,7 @@ for (sampling in 1:nIter2){ # for each sample
   # perform CV
   for (j in 1:length(flds))
   {
-    print(paste("PROCESSING CLUSTER n°", j, "out of", length(flds)))
+    print(paste("PROCESSING CLUSTER nr", j, "out of", length(flds)))
     id = flds[[j]]
     training_data= valuetable[-id,]
     validation_data = valuetable[id,]  
@@ -236,7 +237,7 @@ for (sampling in 1:nIter2){ # for each sample
   # perform CV
   for (j in 1:length(flds))
   {
-    print(paste("PROCESSING CLUSTER n°", j, "out of", length(flds)))
+    print(paste("PROCESSING CLUSTER nr", j, "out of", length(flds)))
     id = which(valuetable$Clust_val.distkm == levels(as.factor(flds))[j])
     training_data= valuetable[-id,]
     validation_data = valuetable[id,]  
